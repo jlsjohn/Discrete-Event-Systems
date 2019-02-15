@@ -1,0 +1,30 @@
+node simple_computer(switchon,switchoff,c1,c2,c3:bool) returns(off,wait,inuse:bool)
+let
+    automaton
+        state OFF
+            do off=true; inuse=false; wait=false;
+            unless (switchon & c1) then ON
+        
+        state ON
+            do off=false; inuse=true; wait=false;
+            unless not c2 then WAIT |
+            (switchoff or not c1) then OFF
+            
+        state WAIT
+            do off=false; inuse=false; wait=true;
+            unless (switchon & c2) then WAIT |
+            not c3 then OFF
+    end
+tel
+
+node global(work_schedule,comp_switchon_room,comp_switchoff_room: bool) returns(comp_state_off_room,comp_state_wait_room,comp_state_on_room: bool)
+    contract
+		var libera:bool;
+		let
+			libera = work_schedule or comp_state_off_room;
+		tel
+		enforce libera
+      with (comp_c1_room,comp_c2_room,comp_c3_room:bool)
+let
+	(comp_state_off_room,comp_state_wait_room,comp_state_on_room) = inlined simple_computer(comp_switchon_room,comp_switchoff_room,comp_c1_room,comp_c2_room,comp_c3_room);
+tel

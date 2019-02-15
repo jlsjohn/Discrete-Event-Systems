@@ -1,0 +1,96 @@
+node simple_lamp(toggle,c1:bool) returns(status:bool)
+let
+    automaton
+        state OFF
+            do status=false;
+            unless toggle or c1 then ON
+        state ON
+            do status=true;
+            unless toggle or not c1 then OFF
+    end
+tel
+
+node simple_computer(switchon,switchoff,c1,c2:bool) returns(state_off,state_on:bool)
+let
+    automaton
+        state OFF
+            do state_off=true; state_on=false;
+            unless switchon or c1 then ON
+			(*Enviar um sinal de ligar por meio do dispositivo conectado ao PC*)
+        
+        state WAIT
+            do state_off=false; state_on=false;
+            unless c2 then WAIT |
+            (switchoff or not c2) then OFF
+            
+        state ON
+            do state_off=false; state_on=true;
+            unless (switchon & c2) then ON |
+            not c2 then OFF
+    end
+tel
+
+node simple_ac(toggle,c1,c2:bool) returns(status:bool)
+let
+    automaton
+        state OFF
+            do status=false;
+            unless c1 or (toggle & c2) then ON
+        state ON
+            do status=true;
+            unless not c1 or (toggle & c2) then OFF
+    end
+tel
+
+node shutter(in_open,in_close,sw_opened,sw_closed,c1:bool) returns(state_opened,state_closed:bool)
+let
+    automaton
+        state CLOSED
+            do state_opened=false; state_closed=true;
+            unless c1 or in_open then OPENING
+			
+		state OPENING
+            do state_opened=false; state_closed=false;
+            unless sw_opened then OPENED			
+
+        state OPENED
+            do state_opened=true; state_closed=false;
+            unless not c1 or in_close then CLOSING
+		
+		state CLOSING
+            do state_opened=false; state_closed=false;
+            unless sw_closed then CLOSED		
+    end
+tel
+
+node room(presence:bool) returns (room_oc:bool)
+let
+    automaton
+		state EMPTY
+			do room_oc = false;
+			unless presence then OCCUPIED
+		state OCCUPIED 
+			do room_oc = true;
+			unless not presence then EMPTY
+		end
+tel
+
+node global(work_schedule,extra_hours_room,presence_room,ac_toggle_room,comp_sw_on_room,comp_sw_off_room, lamp_toggle_room,shutter_open_room,shutter_close_room,shutter_sw_opened_room,shutter_sw_closed_room: bool) returns(ac_status_room,lamp_on_room,shutter_opened_room,shutter_closed_room,comp_off_room,comp_on_room, status_room: bool)
+    contract
+        var ac_rule,comp_rule,lamp_rule,shutter_rule:bool;
+        let
+            ac_rule = not (not status_room & (not work_schedule or not extra_hours_room)) or (not ac_status_room);
+            comp_rule = not (not work_schedule or not extra_hours_room) or (comp_off_room);
+            lamp_rule = not (not status_room & (not work_schedule or not extra_hours_room)) or (not lamp_on_room);
+            shutter_rule = not work_schedule or (shutter_closed_room);
+        tel
+        enforce ac_rule & comp_rule & lamp_rule & shutter_rule
+        with(comp_c1_room,comp_c2_room,lamp_c1_room,shutter_c1_room,ac_c1_room,ac_c2_room:bool)
+
+let
+	(comp_off_room,comp_on_room) = inlined simple_computer(comp_sw_on_room,comp_sw_off_room,comp_c1_room,comp_c2_room);
+	lamp_on_room = inlined simple_lamp(lamp_toggle_room,lamp_c1_room);
+	(shutter_opened_room,shutter_closed_room) = inlined shutter(shutter_open_room,shutter_close_room,shutter_sw_opened_room,shutter_sw_closed_room,shutter_c1_room);
+	ac_status_room = inlined simple_ac(ac_toggle_room,ac_c1_room,ac_c2_room);
+	status_room = inlined room(presence_room);
+tel

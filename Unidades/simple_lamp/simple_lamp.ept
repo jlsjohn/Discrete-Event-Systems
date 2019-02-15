@@ -1,0 +1,23 @@
+node lamp(toggle,c1,c2:bool) returns(status:bool)
+let
+	automaton
+		state Off do
+			status=false;
+			unless (toggle & c2) or not c1 then On
+		state On do
+			status=true;
+			unless (toggle & c2) or not c1 then Off
+    end
+tel
+
+node global(work_schedule,lamp_toggle_room: bool) returns(lamp_on_room: bool)
+    contract
+		var libera:bool;
+		let
+			libera = work_schedule or not lamp_on_room;
+		tel
+		enforce libera
+      with (lamp_c1_room,lamp_c2_room:bool)
+let
+	lamp_on_room = inlined lamp(lamp_toggle_room,lamp_c1_room,lamp_c2_room);
+tel
