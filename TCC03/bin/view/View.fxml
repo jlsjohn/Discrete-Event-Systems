@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ViewController">
+   <children>
+      <Button layoutX="30.0" layoutY="534.0" mnemonicParsing="false" onAction="#sendAction" prefHeight="52.0" prefWidth="164.0" text="Send Update">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button layoutX="237.0" layoutY="534.0" mnemonicParsing="false" onAction="#configure" prefHeight="52.0" prefWidth="164.0" text="Configure">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <CheckBox fx:id="checkPresence1" layoutX="14.0" layoutY="48.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="289.0" text="Presence1">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkPresence2" layoutX="14.0" layoutY="86.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="289.0" text="Presence2">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkPresence3" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="289.0" text="Presence3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkRoomLamp1" layoutX="14.0" layoutY="164.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="289.0" text="Room Lamp1">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkRoomLamp2" layoutX="14.0" layoutY="203.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="289.0" text="Room Lamp2">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkRoomLamp3" layoutX="14.0" layoutY="242.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="289.0" text="Room Lamp3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      
+      <Button fx:id="btnSetConfig" layoutX="349.0" layoutY="487.0" mnemonicParsing="false" onAction="#setConfiguration" prefHeight="25.0" prefWidth="52.0" text="Ok">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <TextField fx:id="fieldIP" layoutX="153.0" layoutY="452.0" prefHeight="25.0" prefWidth="246.0" promptText="Server IP" />
+      <TextField fx:id="fieldPort" layoutX="153.0" layoutY="493.0" prefHeight="25.0" prefWidth="181.0" promptText="Server Port" />
+      <Label fx:id="labelPresence1" layoutX="343.0" layoutY="50.0" prefHeight="25.0" prefWidth="65.0" text="OFF" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelPresence2" layoutX="343.0" layoutY="88.0" prefHeight="25.0" prefWidth="65.0" text="OFF" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelPresence3" layoutX="343.0" layoutY="126.0" prefHeight="25.0" prefWidth="65.0" text="OFF" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelRoomLamp1" layoutX="343.0" layoutY="166.0" prefHeight="25.0" prefWidth="65.0" text="OFF" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelRoomLamp2" layoutX="344.0" layoutY="205.0" prefHeight="25.0" prefWidth="65.0" text="OFF" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelRoomLamp3" layoutX="343.0" layoutY="244.0" prefHeight="25.0" prefWidth="65.0" text="OFF" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      
+      <ImageView fitHeight="408.0" fitWidth="768.0" layoutX="410.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="54.53094482421875" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="142.0">
+         <image>
+            <Image url="@base_house1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="lamp1" fitHeight="63.0" fitWidth="39.0" layoutX="565.0" layoutY="360.0" onMouseClicked="#turnL1" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/lamp_0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="lamp2" fitHeight="63.0" fitWidth="39.0" layoutX="777.0" layoutY="359.0" onMouseClicked="#turnL2" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/lamp_0.png" />
+         </image>
+      </ImageView>      
+      <ImageView fx:id="lamp3" fitHeight="63.0" fitWidth="39.0" layoutX="991.0" layoutY="359.0" onMouseClicked="#turnL3" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/lamp_0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="user1" fitHeight="63.0" fitWidth="39.0" layoutX="485.0" layoutY="188.0" onMouseClicked="#user_pres_1" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/user_pres_man_0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="user2" fitHeight="63.0" fitWidth="39.0" layoutX="735.0" layoutY="217.0" onMouseClicked="#user_pres_2" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/user_pres_man_0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="user3" fitHeight="63.0" fitWidth="39.0" layoutX="1085.0" layoutY="188.0" onMouseClicked="#user_pres_3" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/user_pres_man_0.png" />
+         </image>
+      </ImageView>
+            
+      <Label fx:id="rule1" layoutX="469.0" layoutY="90.0" prefHeight="25.0" prefWidth="70.0" text="Rule 1">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="rule2" layoutX="573.0" layoutY="90.0" prefHeight="25.0" prefWidth="70.0" text="Rule 2">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="rule3" layoutX="684.0" layoutY="90.0" prefHeight="25.0" prefWidth="70.0" text="Rule 3">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="rule4" layoutX="787.0" layoutY="90.0" prefHeight="25.0" prefWidth="70.0" text="Rule 4">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
