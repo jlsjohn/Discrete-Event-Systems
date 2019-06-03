@@ -1,0 +1,66 @@
+node room_presence(presence: bool) returns (has_pres_user: int)
+let
+    automaton
+
+	    state Empty do
+	    	has_pres_user = 0; 
+	    unless presence then Occupied
+	    
+	    state Occupied do
+	    	has_pres_user = 1;
+	    unless not presence then Empty
+
+    end 
+tel
+
+node room_lamp(turn_on_l, pres_user1, pres_user2, pres_user3, c1: bool) returns (is_on_l: int)
+var someone: bool;
+let
+	someone = (pres_user1 or pres_user2 or pres_user3);
+	automaton
+		state Off do
+			is_on_l = 0;
+			unless pres_user1 & c1 then On
+			| (pres_user2 or pres_user3) then Wait
+
+		state Wait do
+			is_on_l = 0;
+			unless (someone & turn_on_l) & c1 then On
+			| not c1 or not someone then Off
+
+		state On do
+			is_on_l = 1;
+			unless ((pres_user2 or pres_user3) & turn_on_l) then Wait
+			| not c1 or not someone then Off
+			| (pres_user1 & turn_on_l) then Wait
+			| (not pres_user1 & (pres_user2 or pres_user3)) & c1 & not turn_on_l then On
+	end
+tel
+
+node supervisor(turn_off, pres_user1, pres_user2, pres_user3, turn_on_l1, turn_on_l2, turn_on_l3: bool) returns (is_on_l1,is_on_l2,is_on_l3,has_pres_user1,has_pres_user2,has_pres_user3: int)
+
+	contract
+		var regra1,someone1:bool;
+	
+	let
+		someone1 = (pres_user1 or pres_user2 or pres_user3);
+		regra1 = not (turn_off & not someone1) or (is_on_l1 + is_on_l2 + is_on_l3 = 0);
+		(*regra1 = not (turn_off & someone1) or (alerta_on = 0);*)
+	tel
+
+		enforce (regra1)
+		with (c1_l1, c1_l2, c1_l3: bool) 
+
+	let
+		is_on_l1 = inlined room_lamp(turn_on_l1,pres_user1,pres_user2,pres_user3,c1_l1);
+		is_on_l2 = inlined room_lamp(turn_on_l2,pres_user2,pres_user1,pres_user3,c1_l2);
+		is_on_l3 = inlined room_lamp(turn_on_l3,pres_user3,pres_user1,pres_user2,c1_l3);
+		has_pres_user1 = inlined room_presence(pres_user1);
+		has_pres_user2 = inlined room_presence(pres_user2);
+		has_pres_user3 = inlined room_presence(pres_user3);
+
+
+	tel
+
+
+

@@ -1,0 +1,23 @@
+node simple_ac(toggle,c1,c2:bool) returns(status:bool)
+let
+	automaton
+		state Off do
+			status=false;
+			unless (toggle & c2) or not c1 then On
+		state On do
+			status=true;
+			unless (toggle & c1) or not c2 then Off
+    end
+tel
+
+node global(work_schedule,ac_toggle_room: bool) returns(ac_on_room: bool)
+    contract
+		var permission:bool;
+		let
+			permission = work_schedule or not ac_on_room;
+		tel
+		enforce permission
+      with (ac_c1_room,ac_c2_room:bool)
+let
+	ac_on_room = inlined simple_ac(ac_toggle_room,ac_c1_room,ac_c2_room);
+tel

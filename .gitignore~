@@ -1,0 +1,8 @@
+# Tipos de arquivos a serem ignorados
+
+!.gitignore
+*.mls
+*.epci
+*.
+global_sim
+

@@ -1,9 +1,9 @@
 
 SIM_PROG=automato
 # same as SIM_PROG, capitalized
-SIM_MOD=Global
-SIM_NODE=global
-CONTRACT_NODE=global
+SIM_MOD=Duas_tarefas_concorrentes
+SIM_NODE=duas_tarefas_concorrentes
+CONTRACT_NODE=duas_tarefas_concorrentes
 
 # This generic Makefile does not allow contract and simulated node in
 # two different modules (can be two different nodes, though)
@@ -15,9 +15,9 @@ HEPTC=heptc
 HEPTS=hepts
 
 #Find sigali /bin/sigali file
-SIGALI=/home/labcontrole/Sigali-2.4/bin/sigali
+SIGALI=/home/labcontrol/Sigali-2.4/bin/sigali
 #Find heptagon lib/c file
-HEPT_LIB_C=/home/labcontrole/heptagon-1.04.00/lib/c
+HEPT_LIB_C=/home/labcontrol/.opam/default/lib/heptagon/c
 
 CTRLR_PROG=$(CONTRACT_NODE)_controller
 

@@ -3,5 +3,6 @@
 !.gitignore
 *.mls
 *.epci
+*.log
 global_sim
 

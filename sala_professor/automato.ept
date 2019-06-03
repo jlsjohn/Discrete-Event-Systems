@@ -1,23 +1,24 @@
-node simple_ac(toggle,c1,c2:bool) returns(status:bool)
+node tarefa_concorrente(r,c,e: bool) returns (a:bool)
 let
-	automaton
-		state Off do
-			status=false;
-			unless (toggle & c2) or not c1 then On
-		state On do
-			status=true;
-			unless (toggle & c1) or not c2 then Off
-    end
+    automaton
+     state Idle do
+        a = false; 
+     unless r & c then Active
+        | r & not c then Wait
+     state Wait do
+        a = false;
+     unless c then Active
+     state Active do
+        a = true;
+     unless e then Idle
+    end 
 tel
 
-node global(work_schedule,ac_toggle_room: bool) returns(ac_on_room: bool)
+node duas_tarefas_concorrentes(r1,e1,r2,e2: bool) returns (a1,a2: bool)
     contract
-		var permission:bool;
-		let
-			permission = work_schedule or not ac_on_room;
-		tel
-		enforce permission
-      with (ac_c1_room,ac_c2_room:bool)
+     enforce not (a1 & a2)
+     with (c1, c2:bool)
 let
-	ac_on_room = inlined simple_ac(ac_toggle_room,ac_c1_room,ac_c2_room);
+    a1 = inlined tarefa_concorrente(r1,c1,e1);
+    a2 = inlined tarefa_concorrente(r2,c2,e2)
 tel

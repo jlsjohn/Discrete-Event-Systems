@@ -1,40 +1,46 @@
-/* --- Generated the 15/2/2019 at 14:44 --- */
-/* --- heptagon compiler, version 1.03.02 (compiled fri. may. 4 17:11:35 CET 2018) --- */
-/* --- Command line: /home/labcontrole/.opam/4.02.3/bin/heptc -target c -target z3z -s global automato.ept --- */
+/* --- Generated the 6/4/2019 at 1:54 --- */
+/* --- heptagon compiler, version 1.05.00 (compiled wed. mar. 13 20:25:55 CET 2019) --- */
+/* --- Command line: /home/labcontrol/.opam/default/bin/heptc -target c -target z3z -s duas_tarefas_concorrentes automato.ept --- */
 
 #ifndef AUTOMATO_H
 #define AUTOMATO_H
 
 #include "automato_types.h"
-#include "global_controller.h"
-typedef struct Automato__simple_ac_mem {
-  int ck_1_2;
+#include "duas_tarefas_concorrentes_controller.h"
+typedef struct Automato__tarefa_concorrente_mem {
+  int v_25;
+  int v_24;
   int pnr;
-} Automato__simple_ac_mem;
+} Automato__tarefa_concorrente_mem;
 
-typedef struct Automato__simple_ac_out {
-  int status;
-} Automato__simple_ac_out;
+typedef struct Automato__tarefa_concorrente_out {
+  int a;
+} Automato__tarefa_concorrente_out;
 
-void Automato__simple_ac_reset(Automato__simple_ac_mem* self);
+void Automato__tarefa_concorrente_reset(Automato__tarefa_concorrente_mem* self);
 
-void Automato__simple_ac_step(int toggle, int c1, int c2,
-                              Automato__simple_ac_out* _out,
-                              Automato__simple_ac_mem* self);
+void Automato__tarefa_concorrente_step(int r, int c, int e,
+                                       Automato__tarefa_concorrente_out* _out,
+                                       Automato__tarefa_concorrente_mem* self);
 
-typedef struct Automato__global_mem {
-  int ck_1;
+typedef struct Automato__duas_tarefas_concorrentes_mem {
+  int v_41;
+  int v_40;
+  int v_57;
+  int v_56;
+  int pnr_1;
   int pnr;
-} Automato__global_mem;
+} Automato__duas_tarefas_concorrentes_mem;
 
-typedef struct Automato__global_out {
-  int ac_on_room;
-} Automato__global_out;
+typedef struct Automato__duas_tarefas_concorrentes_out {
+  int a1;
+  int a2;
+} Automato__duas_tarefas_concorrentes_out;
 
-void Automato__global_reset(Automato__global_mem* self);
+void Automato__duas_tarefas_concorrentes_reset(Automato__duas_tarefas_concorrentes_mem* self);
 
-void Automato__global_step(int work_schedule, int ac_toggle_room,
-                           Automato__global_out* _out,
-                           Automato__global_mem* self);
+void Automato__duas_tarefas_concorrentes_step(int r1, int e1, int r2, int e2,
+                                              Automato__duas_tarefas_concorrentes_out* _out,
+                                              Automato__duas_tarefas_concorrentes_mem* self);
 
 #endif // AUTOMATO_H

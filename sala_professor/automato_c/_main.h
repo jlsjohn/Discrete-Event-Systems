@@ -1,6 +1,6 @@
-/* --- Generated the 15/2/2019 at 14:44 --- */
-/* --- heptagon compiler, version 1.03.02 (compiled fri. may. 4 17:11:35 CET 2018) --- */
-/* --- Command line: /home/labcontrole/.opam/4.02.3/bin/heptc -target c -target z3z -s global automato.ept --- */
+/* --- Generated the 6/4/2019 at 1:54 --- */
+/* --- heptagon compiler, version 1.05.00 (compiled wed. mar. 13 20:25:55 CET 2019) --- */
+/* --- Command line: /home/labcontrol/.opam/default/bin/heptc -target c -target z3z -s duas_tarefas_concorrentes automato.ept --- */
 
 #ifndef _MAIN_H
 #define _MAIN_H
