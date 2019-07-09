@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ViewController">
+	<children>
+		<Button layoutX="936.0" layoutY="77.0" mnemonicParsing="false" onAction="#sendAction" prefHeight="25.0" prefWidth="100.0" text="Send Update">
+			<font>
+				<Font size="12.0" />
+			</font>
+		</Button>
+		<Button layoutX="1047.0" layoutY="77.0" mnemonicParsing="false" onAction="#configure" prefHeight="25.0" prefWidth="100.0" text="Configure">
+			<font>
+				<Font size="12.0" />
+			</font>
+		</Button>
+		<Button fx:id="btnSetConfig" layoutX="1134.0" layoutY="46.0" mnemonicParsing="false" onAction="#setConfiguration" prefHeight="25.0" prefWidth="52.0" text="Ok">
+			<font>
+				<Font size="12.0" />
+			</font>
+		</Button>
+
+		<TextField fx:id="fieldIP" layoutX="937.0" layoutY="14.0" prefHeight="25.0" prefWidth="246.0" promptText="Server IP">
+			<font>
+				<Font size="12.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="fieldPort" layoutX="936.0" layoutY="46.0" prefHeight="25.0" prefWidth="181.0" promptText="Server Port">
+			<font>
+				<Font size="12.0" />
+			</font>
+		</TextField>
+
+		<ImageView fitHeight="434.0" fitWidth="971.0" layoutX="215.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-16.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="182.0">
+			<image>
+				<Image url="@Interface.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageLamp1" fitHeight="63.0" fitWidth="39.0" layoutX="550.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/lamp_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageLamp2" fitHeight="63.0" fitWidth="39.0" layoutX="790.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/lamp_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageLamp3" fitHeight="63.0" fitWidth="39.0" layoutX="1022.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/lamp_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageUsuario1" fitHeight="63.0" fitWidth="39.0" layoutX="484.0" layoutY="230.0" onMouseClicked="#usuario_pres_1" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/user_pres_man_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageUsuario2" fitHeight="63.0" fitWidth="39.0" layoutX="734.0" layoutY="259.0" onMouseClicked="#usuario_pres_2" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/user_pres_man_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageUsuario3" fitHeight="63.0" fitWidth="39.0" layoutX="1078.0" layoutY="230.0" onMouseClicked="#usuario_pres_3" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/user_pres_man_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageInterruptor1" fitHeight="63.0" fitWidth="39.0" layoutX="285.0" layoutY="399.0" onMouseClicked="#ligaDesligaLP1" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/botão_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageInterruptor2" fitHeight="63.0" fitWidth="39.0" layoutX="285.0" layoutY="450.0" onMouseClicked="#ligaDesligaLP2" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/botão_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageInterruptor3" fitHeight="63.0" fitWidth="39.0" layoutX="285.0" layoutY="501.0" onMouseClicked="#ligaDesligaLP3" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/botão_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageDesliga" fitHeight="129.0" fitWidth="129.0" layoutX="420.0" layoutY="31.0" onMouseClicked="#desliga_geral" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@assets/botão_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageCondAr" fitHeight="129.0" fitWidth="129.0" layoutX="709.0" layoutY="495.0" onMouseClicked="#desliga_ar" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+			<image>
+				<Image url="@assets/condicionadorAr_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageAlarm" fitHeight="63.0" fitWidth="39.0" layoutX="662.0" layoutY="529.0" onMouseClicked="#desliga_alarme" pickOnBounds="true" preserveRatio="true" visible="false">
+			<image>
+				<Image url="@assets/alerta.gif" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImageAlarmNumero" fitHeight="155.0" fitWidth="323.0" layoutX="573.0" layoutY="38.0" onMouseClicked="#desliga_alarme" pickOnBounds="true" preserveRatio="true" visible="false">
+			<image>
+				<Image url="@assets/time.gif" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImagePC1" fitHeight="63.0" fitWidth="39.0" layoutX="548.0" layoutY="257.0" onMouseClicked="#ligaDesligaPC1" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+			<image>
+				<Image url="@assets/PC_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImagePC2" fitHeight="63.0" fitWidth="39.0" layoutX="734.0" layoutY="340.0" onMouseClicked="#ligaDesligaPC2" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+			<image>
+				<Image url="@assets/PC_0.png" />
+			</image>
+		</ImageView>
+		<ImageView fx:id="ImagePC3" fitHeight="63.0" fitWidth="39.0" layoutX="1021.0" layoutY="257.0" onMouseClicked="#ligaDesligaPC3" pickOnBounds="true" preserveRatio="true" rotate="270.0">
+			<image>
+				<Image url="@assets/PC_0.png" />
+			</image>
+		</ImageView>
+
+		<Label fx:id="rule1" layoutX="1025.0" layoutY="114.0" prefHeight="25.0" prefWidth="70.0" text="Rule 1">
+			<font>
+				<Font name="System Bold" size="16.0" />
+			</font>
+		</Label>
+		<Label fx:id="rule2" layoutX="1025.0" layoutY="152.0" prefHeight="25.0" prefWidth="70.0" text="Rule 2">
+			<font>
+				<Font name="System Bold" size="16.0" />
+			</font>
+		</Label>
+		<Label fx:id="rule3" layoutX="1112.0" layoutY="114.0" prefHeight="25.0" prefWidth="70.0" text="Rule 3">
+			<font>
+				<Font name="System Bold" size="16.0" />
+			</font>
+		</Label>
+		<Label fx:id="rule4" layoutX="1112.0" layoutY="152.0" prefHeight="25.0" prefWidth="70.0" text="Rule 4">
+			<font>
+				<Font name="System Bold" size="16.0" />
+			</font>
+		</Label>
+	</children>
+</AnchorPane>

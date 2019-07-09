@@ -1,0 +1,119 @@
+node presenca_sala(presenca: bool) returns (tem_usuario: int)
+let
+	automaton
+		state Desocupado do
+			tem_usuario = 0; 
+			unless presenca then Ocupado
+
+		state Ocupado do
+			tem_usuario = 1;
+			unless not presenca then Desocupado
+	end 
+tel
+
+node alarme_sala(alarme_sinal, alarme_final: bool) returns (estado_alarme: int)
+let
+	automaton
+		state Desativado do
+			estado_alarme = 0; 
+			unless alarme_sinal then Soando
+
+		state Soando do
+			estado_alarme = 0;
+			unless alarme_final then Finalizado
+
+		state Finalizado do
+			estado_alarme = 1;
+			unless alarme_final then Desativado
+	end 
+tel
+
+node condicionador_sala(liga_desliga_ac,c1_ac,c2_ac:bool) returns(estado_ac:int)
+let
+	automaton
+		state Desligado_ac do
+			estado_ac=0;
+			unless (liga_desliga_ac & c1_ac) or not c2_ac then Ligado_ac
+
+		state Ligado_ac do
+			estado_ac=1;
+			unless (liga_desliga_ac & c1_ac) or not c2_ac then Desligado_ac
+	end
+tel
+
+node pc_sala(liga_PC, desliga_PC, c1_PC: bool) returns (estado_PC: int)
+let
+	automaton
+		state Desligado_PC do
+			estado_PC = 0; 
+			unless (liga_PC & c1_PC) then Ligado_PC
+
+		state Ligado_PC do
+			estado_PC = 1;
+			unless (desliga_PC or not c1_PC) then Desligado_PC
+	end 
+tel
+
+node lampada_sala(liga_lp, pres_usuario1, pres_usuario2, pres_usuario3, c1_lp: bool) returns (estado_lp: int)
+var alguem: bool;
+let
+	alguem = (pres_usuario1 or pres_usuario2 or pres_usuario3);
+	automaton
+		state Desligada_lp do
+			estado_lp = 0;
+			unless pres_usuario1 & c1_lp then Ligada_lp
+			| (pres_usuario2 or pres_usuario3) then Esperando
+
+		state Esperando do
+			estado_lp = 0;
+			unless (alguem & liga_lp) & c1_lp then Ligada_lp
+			| not c1_lp or not alguem then Desligada_lp
+
+		state Ligada_lp do
+			estado_lp = 1;
+			unless ((pres_usuario2 or pres_usuario3) & liga_lp) then Esperando
+			| not c1_lp or not alguem then Desligada_lp
+			| (pres_usuario1 & liga_lp) then Esperando
+			| (not pres_usuario1 & (pres_usuario2 or pres_usuario3)) & c1_lp & not liga_lp then Ligada_lp
+	end
+tel
+
+node supervisor(botaoGeral,liga_lp1,liga_lp2,liga_lp3,pres_usuario1,pres_usuario2,pres_usuario3,liga_PC1,desliga_PC1,liga_PC2,desliga_PC2,liga_PC3, desliga_PC3,liga_desliga_ac,alarme_sinal,alarme_final: bool) 
+returns (estado_lp1,estado_lp2,estado_lp3,estado_PC1,estado_PC2,estado_PC3,estado_ac,estado_al,tem_usuario1,tem_usuario2,tem_usuario3: int)
+
+	contract
+		var regraDesliga, algum, apagaLamp,desligaPC:bool;
+	
+	let
+		(*Se tiver alguem na sala*)
+		algum = (pres_usuario1 or pres_usuario2 or pres_usuario3);
+		(*Apagar todas as lampadas*)
+		apagaLamp = (estado_lp1 + estado_lp2 + estado_lp3 = 0);
+		(*Desligar todos os PCs*)
+		desligaPC = (estado_PC1 + estado_PC2 + estado_PC3 = 0);
+
+		(*Regra Desliga tudo*)		
+		regraDesliga = not (botaoGeral & (estado_al = 1)) or ((estado_ac = 0) & apagaLamp & desligaPC);
+
+	tel
+
+		enforce (regraDesliga)
+		with (c1_lp1,c1_lp2,c1_lp3,c1_ac,c2_ac,c1_PC1,c1_PC2,c1_PC3: bool) 
+
+	let
+		tem_usuario1	= inlined presenca_sala(pres_usuario1);
+		tem_usuario2	= inlined presenca_sala(pres_usuario2);
+		tem_usuario3	= inlined presenca_sala(pres_usuario3);
+
+		estado_al		= inlined alarme_sala(alarme_sinal,alarme_final);
+
+		estado_lp1		= inlined lampada_sala(liga_lp1,pres_usuario1,pres_usuario2,pres_usuario3,c1_lp1);
+		estado_lp2		= inlined lampada_sala(liga_lp2,pres_usuario2,pres_usuario1,pres_usuario3,c1_lp2);
+		estado_lp3		= inlined lampada_sala(liga_lp3,pres_usuario3,pres_usuario1,pres_usuario2,c1_lp3);
+
+		estado_ac		= inlined condicionador_sala(liga_desliga_ac,c1_ac,c2_ac);
+
+		estado_PC1		= inlined pc_sala(liga_PC1, desliga_PC1, c1_PC1);
+		estado_PC2		= inlined pc_sala(liga_PC2, desliga_PC2, c1_PC2);
+		estado_PC3		= inlined pc_sala(liga_PC3, desliga_PC3, c1_PC3);
+	tel
